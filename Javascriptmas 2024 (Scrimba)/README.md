@@ -1,6 +1,6 @@
 # Javascriptmas 2024 (Scrimba)
 
-Check out my solution scrims
+Check out my solution scrims:
 
 - Day 1 - Grandpa's Gift List 🎅 [https://scrimba.com/s08etmonst/](https://scrimba.com/s08etmonst/)
 
