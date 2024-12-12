@@ -53,7 +53,7 @@ function checkDuplicate() {
 
     const text = removeWhitespace(itemText);
 
-    if (listArr.includes(text)) return;
+    if (listArr.includes(text) || text === "") return;
 
     listArr.push(text);
     renderList();
