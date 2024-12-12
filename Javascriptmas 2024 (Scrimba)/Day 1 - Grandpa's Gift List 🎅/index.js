@@ -5,7 +5,7 @@ template files (c) Scrimba MIT license
 
 changelog:
 
-* submitted initial solution
+* submit initial solution
 */
 
 /*
