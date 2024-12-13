@@ -9,15 +9,13 @@ changelog:
 */
 
 :root {
-    --bg: #836149;
+    --bg: rgb(131, 97, 73, 0.6);
     --text: #fff898;
 
     --button: hsl(46, 100%, 50%);
     --button-hover: hsl(46, 100%, 70%);
     --button-active: hsl(46, 100%, 47%);
     --button-text: #503030;
-
-    filter: brightness(0.5);
 
     background-color: var(--bg);
     color: var(--text);
@@ -31,13 +29,16 @@ body {
     justify-content: center;
     align-items: stretch;
     min-height: 100vh;
-    background-color: inherit;
-    background-image: url("snowybg.png");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.9)),
+        url("snowybg.png");
     background-size: cover;
 }
 
 .container {
-    background-color: inherit;
+    background-image: linear-gradient(
+        rgba(131, 97, 73, 0.9),
+        rgba(131, 97, 73, 0.2)
+    );
     text-align: center;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
