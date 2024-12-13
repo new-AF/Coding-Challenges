@@ -12,6 +12,11 @@ changelog:
     --bg: #836149;
     --text: #fff898;
 
+    --button: hsl(46, 100%, 50%);
+    --button-hover: hsl(46, 100%, 70%);
+    --button-active: hsl(46, 100%, 47%);
+    --button-text: #503030;
+
     filter: brightness(0.5);
 
     background-color: var(--bg);
@@ -86,24 +91,29 @@ input::placeholder {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
+
+    &:focus,
+    :focus-visible {
+        outline-color: var(--button-hover);
+    }
 }
 
 button {
     padding: 10px 20px;
     border: none;
-    background-color: #054787;
-    color: #fff;
+    background-color: var(--button);
+    color: var(--button-text);
     cursor: pointer;
     border-radius: 4px;
 }
 
 button:hover,
 button:focus {
-    background-color: #218838;
+    background-color: var(--button-hover);
 }
 
 button:active {
-    background-color: #ffc300;
+    background-color: var(--button-active);
     color: black;
 }
 
