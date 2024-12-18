@@ -35,6 +35,7 @@ body {
     padding-block: var(--new-gap-large);
     color: #c1c1c1;
     display: flex;
+    row-gap: var(--new-gap-large);
     flex-wrap: wrap;
     justify-content: center;
     height: 100vh;
@@ -49,6 +50,11 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+header,
+section {
+    border-radius: var(--new-gap-tiny);
 }
 
 header h1 {
@@ -97,13 +103,24 @@ section {
 }
 
 button {
-    background: #0084ff;
+    background: hsl(209, 100%, 30%);
     color: white;
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 4px;
     width: 100%;
+    transition: transform 0.1s, background-color 0.1s;
+
+    &:hover {
+        background-color: hsl(209, 100%, 36%);
+    }
+
+    &:active {
+        outline: auto;
+        transform: scale(0.98);
+        background-color: hsl(209, 100%, 24%);
+    }
 }
 
 .footer-txt {
