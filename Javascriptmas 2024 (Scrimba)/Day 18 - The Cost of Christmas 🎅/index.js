@@ -19,9 +19,12 @@ Expected output: 559.93
 - Use the reduce() method to complete this challenge.
 */
 
-function calculateCost(arr){
-    // Your code here!
+function calculateCost(arr) {
+    const array = arr.filter(({ isGift }) => isGift);
+
+    const sum = array.reduce((acc, { price }) => acc + price, 0);
+
+    return sum;
 }
 
-console.log(calculateCost(shoppingCartData)) //559.93 
-
+console.log(calculateCost(shoppingCartData)); //559.93
