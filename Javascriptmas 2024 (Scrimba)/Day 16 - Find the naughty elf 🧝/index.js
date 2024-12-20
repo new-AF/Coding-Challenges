@@ -1,4 +1,4 @@
-import { workshopData } from '/data.js'
+import { workshopData } from "/data.js";
 
 /*
 Santa has grown suspicious that one of his elves isn't playing fair. The elves are paid well to make toys but Santa thinks one of the elves is keeping some of the toys he has made (and probably selling them on the black market in one of Laplands dodgier neighbourhoods.)
@@ -21,42 +21,39 @@ Stretch Goal
 
 // Function to find the elf who created more presents than they delivered
 function findNaughtyElf(data) {
-  const naughtyElves = []
+    const naughtyElves = [];
 
-  data.forEach((elf) => {
-    const totalShipped = {}
-
-    // Recursive function to sum toy counts
-    function sumToys(shipmentData) {
-      for (const region in shipmentData) {
-        const subRegion = shipmentData[region];
-        if (Array.isArray(subRegion)) {
-          // If it's an array, sum toy counts
-          subRegion.forEach(({ toy, count }) => {
-            totalShipped[toy] = (totalShipped[toy] || 0) + count
-          })
-        } else {
-          // If it's an object, recurse further
-          sumToys(region)  
+    /* track = {
+    e.g. elfName: ""
+    toys:{
+     "Teddy Bear": {madeCount: 0, shippedCount: 0} 
+    }
+  } */
+    const track = {};
+    const recurse = (currentKey, value, parentKey) => {
+        /* Objects and Arrays */
+        if (typeof value === "object") {
+            console.log();
+            const newParentKey =
+                currentKey === "toysMade" || currentKey === "toysShipped"
+                    ? currentKey
+                    : parentKey;
+            console.log({ currentKey, parentKey }, Object.keys(value));
+            Object.keys(value).forEach((key) =>
+                recurse(key, value[key], newParentKey)
+            );
         }
-      }
-    }
+    };
 
-    // Calculate total toys shipped
-    sumToys(elf)
+    const isArray = (element) => Array.isArray(element);
+    const isNotArray = (element) => Array.isArray(element) === false;
 
-    // Compare toysMade to totalShipped
-    for (const toy in elf.toysMade) {
-      if (elf.toysMade[toy] > (totalShipped[toy] || 0)) {
-        naughtyElves.push(elf.name)
-        break
-      }
-    }
-  })
+    // data.forEach(element => recurse(null, element))
 
-  return naughtyElves.join(', ')
+    recurse(null, data[0]);
+
+    return naughtyElves.join(", ");
 }
 
 // Example usage
-console.log(findNaughtyElf(workshopData)) //Elf Kalvin Armadillo
-
+console.log(findNaughtyElf(workshopData)); //Elf Kalvin Armadillo
