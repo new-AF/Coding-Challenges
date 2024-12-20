@@ -42,7 +42,13 @@ function findNaughtyElf(data) {
             Object.keys(value).forEach((key) =>
                 recurse(key, value[key], newParentKey)
             );
-        }
+        } else if (currentKey === "name") {
+        /* toys : {
+     "Teddy Bear": {madeCount: 0, shippedCount: 0} 
+    } */
+            track["name"] = currentKey;
+            track["toys"] = {};
+        } else if (parentKey === "toysMade") track.toys[currentKey] = value;
     };
 
     const isArray = (element) => Array.isArray(element);
@@ -51,6 +57,8 @@ function findNaughtyElf(data) {
     // data.forEach(element => recurse(null, element))
 
     recurse(null, data[0]);
+
+    console.log(track);
 
     return naughtyElves.join(", ");
 }
