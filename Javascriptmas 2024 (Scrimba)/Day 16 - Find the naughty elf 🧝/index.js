@@ -46,7 +46,7 @@ function findNaughtyElf(data) {
         /* toys : {
      "Teddy Bear": {madeCount: 0, shippedCount: 0} 
     } */
-            track["name"] = currentKey;
+            track["name"] = value;
             track["toys"] = {};
         } else if (parentKey === "toysMade") track.toys[currentKey] = value;
     };
