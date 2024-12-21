@@ -1,7 +1,56 @@
-* {
-    --green: #024f1a; 
+:root {
+    --green: #024f1a;
+    --color: snow;
+    --title-color: rgba(255, 255, 255, 0.85);
+    --sub-title-color: rgba(255, 255, 255, 0.75);
+
+    --font-size-large: 3rem;
+    --font-size-medium: 1rem;
+    --font-size-small: 1rem;
+    --font-size-tiny: 1rem;
+
+    --z-index-about: 1;
 }
 
-img {
+body {
+    background-color: var(--green);
+    position: relative;
+}
+
+header {
+    position: absolute;
+    text-align: right;
+    top: 0;
+    right: 0;
+    z-index: var(--z-index-about);
+}
+
+h1 {
+    color: var(--title-color);
+    font-family: "Times New Roman", Times, serif;
+    font-size: var(--font-size-large);
+}
+
+h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: var(--font-size-small);
+    width: 30ch;
+    line-height: 1.7;
+    letter-spacing: 0.5pt;
+    color: var(--sub-title-color);
+}
+
+.about {
+    position: absolute;
+    background-color: hsla(0, 100%, 100%, 0.5);
+    z-index: var(--z-index-about);
+    bottom: 0;
+}
+
+.santa {
     width: 200px;
+    position: absolute;
+    left: -20%;
+    top: -10%;
 }
