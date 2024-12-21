@@ -17,4 +17,56 @@ Stretch Goals for dedicated Social Media Engineers
 - Add left and right arrow overlays to the image so users can scroll back and forth.
 */
 
-import { feedData } from './data.js'
+import { feedData } from "./data.js";
+
+const pageElements = {
+    avatarsFeed: document.querySelector(".feed-avatars"),
+    imagesFeed: document.querySelector(".feed-images"),
+    uxLoading: document.querySelector(".ux-loading"),
+};
+
+const Avatar = (name, imageUrl) => {
+    const element = document.createElement("div");
+    element.classList.add("avatar");
+    element.setAttribute("aria-label", `${name} Avatar`);
+    element.style.backgroundImage = `url(./images/${imageUrl})`;
+    return element;
+};
+
+const MainImage = (imageUrl, alt) => {
+    const element = document.createElement("img");
+    element.classList.add("feature-image");
+    element.setAttribute("alt", alt);
+    element.src = imageUrl;
+    return element;
+};
+
+const avatars = feedData.map((obj) => {
+    const { avatarUrl: imageUrl, handle: name, features } = obj;
+    const avatar = Avatar(name, imageUrl);
+    return {
+        element: avatar,
+        feedImages: features,
+    };
+});
+
+const cycleImages = (avatars) => {
+    const state = {
+        currentAvatar: avatars[0],
+        currentCount: 1,
+        avatarsCount: avatars.length,
+        intervalId: undefined,
+        loadNextAvatar: function () {
+            if (this.currentCount >= this.avatarsCount) return;
+            this.avatarsCount += 1;
+            this.currentAvatar = avatars[this.currentCount];
+        },
+    };
+};
+
+document.addEventListener("DOMContentLoaded", (e) => {
+    pageElements.uxLoading.classList.add("stop-animation");
+    pageElements.avatarsFeed.append(...avatars.map((obj) => obj.element));
+    const main = MainImage("./images/bike.webp");
+    pageElements.imagesFeed.append(main);
+});
