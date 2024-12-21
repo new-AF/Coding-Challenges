@@ -23,45 +23,78 @@ Stretch Goal
 function findNaughtyElf(data) {
     const naughtyElves = [];
 
-    /* track = {
-    e.g. elfName: ""
-    toys:{
-     "Teddy Bear": {madeCount: 0, shippedCount: 0} 
+    /* info = {
+      name : "Elf Tiberius III",
+      toysLeft: {
+        "Teddy Bear": {madeCount: 0, shippedCount: 0} 
+      }
     }
-  } */
-    const track = {};
-    const recurse = (currentKey, value, parentKey) => {
+  */
+    let track = {};
+    const recurse = ({ currentKey, value, parentKey, parentToy }) => {
         /* Objects and Arrays */
         if (typeof value === "object") {
-            console.log();
+            // console.log()
+
             const newParentKey =
                 currentKey === "toysMade" || currentKey === "toysShipped"
                     ? currentKey
                     : parentKey;
-            console.log({ currentKey, parentKey }, Object.keys(value));
+
+            /* e.g. { toy: "Teddy Bear", count: 3 } */
+            const newParentToy = "toy" in value ? value["toy"] : parentToy;
+
+            // console.log({ currentKey, parentKey, parentToy, value: Object.keys(value) })
             Object.keys(value).forEach((key) =>
-                recurse(key, value[key], newParentKey)
+                recurse({
+                    currentKey: key,
+                    value: value[key],
+                    parentKey: newParentKey,
+                    parentToy: newParentToy,
+                })
             );
         } else if (currentKey === "name") {
-        /* toys : {
-     "Teddy Bear": {madeCount: 0, shippedCount: 0} 
-    } */
+
+        /* {
+      name : "Elf Tiberius III",
+      toysLeft: {}
+      }
+    */
             track["name"] = value;
-            track["toys"] = {};
-        } else if (parentKey === "toysMade") track.toys[currentKey] = value;
+            track["toysLeft"] = {};
+        } else if (parentKey === "toysMade")
+
+        /* {
+      name : "Elf Tiberius III",
+      toys: { Teddy Bear: 10 }
+    }
+    */
+            track["toysLeft"][currentKey] = value;
+        else if (parentKey === "toysShipped" && currentKey === "count") {
+            // console.log({parentToy})
+            if (parentToy in track["toysLeft"])
+                track["toysLeft"][parentToy] -= value;
+        }
     };
 
-    const isArray = (element) => Array.isArray(element);
-    const isNotArray = (element) => Array.isArray(element) === false;
+    const hasAnyToysLeft = (obj) =>
+        Object.entries(obj)
+            .map(([toy, count]) => count)
+            .some((value) => value !== 0);
 
-    // data.forEach(element => recurse(null, element))
+    data.forEach((obj) => {
+        recurse({ value: obj });
+        // console.log(track)
+        if (hasAnyToysLeft(track["toysLeft"])) {
+            console.log(track);
+            naughtyElves.push(track["name"]);
+        }
+        track = {};
+    });
 
-    recurse(null, data[0]);
-
-    console.log(track);
-
-    return naughtyElves.join(", ");
+    // return naughtyElves.join(', ')
 }
 
 // Example usage
 console.log(findNaughtyElf(workshopData)); //Elf Kalvin Armadillo
+console.log("--- finish ---");
