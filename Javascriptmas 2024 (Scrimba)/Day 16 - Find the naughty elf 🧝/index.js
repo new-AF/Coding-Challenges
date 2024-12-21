@@ -30,7 +30,7 @@ function findNaughtyElf(data) {
       }
     }
   */
-    let track = {};
+    const track = {};
     const recurse = ({ currentKey, value, parentKey, parentToy }) => {
         /* Objects and Arrays */
         if (typeof value === "object") {
@@ -86,15 +86,16 @@ function findNaughtyElf(data) {
         recurse({ value: obj });
         // console.log(track)
         if (hasAnyToysLeft(track["toysLeft"])) {
-            console.log(track);
+            // console.log(track)
             naughtyElves.push(track["name"]);
         }
-        track = {};
+        delete track["name"];
+        delete track["toysLeft"];
     });
 
-    // return naughtyElves.join(', ')
+    return naughtyElves.join(", ");
 }
 
 // Example usage
 console.log(findNaughtyElf(workshopData)); //Elf Kalvin Armadillo
-console.log("--- finish ---");
+console.log("--- finished ---");
