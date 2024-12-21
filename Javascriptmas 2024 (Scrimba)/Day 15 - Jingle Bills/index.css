@@ -1,56 +1,106 @@
 :root {
     --green: #024f1a;
     --color: snow;
-    --title-color: rgba(255, 255, 255, 0.85);
-    --sub-title-color: rgba(255, 255, 255, 0.75);
+    --header-one-color: rgba(255, 255, 255, 0.85);
+    --header-two-color: rgba(255, 255, 255, 0.75);
+    --header-three-color: rgba(255, 255, 255, 0.55);
+    --line-color: rgba(0, 0, 0, 0.2);
 
-    --font-size-large: 3rem;
-    --font-size-medium: 1rem;
-    --font-size-small: 1rem;
-    --font-size-tiny: 1rem;
+    --font-size-header-one: 3rem;
+    --font-size-header-two: 2rem;
+    --font-size-header-three: 1.4rem;
 
     --z-index-about: 1;
+
+    --new-gap-large: 2rem;
+    --new-gap-medium: 1rem;
+    --new-gap-small: 0.9rem;
+    --new-gap-tiny: 0.2rem;
+
+    background-color: var(--green);
+}
+
+* {
+    margin: 0;
 }
 
 body {
-    background-color: var(--green);
+    min-height: 100vh;
+    /* overflow-y: hidden; */
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
     position: relative;
+    width: 400px;
+    aspect-ratio: 1 / 1.4;
+    overflow: hidden;
+    outline: medium solid rgba(255, 250, 250, 0.808);
 }
 
-header {
+.header-one,
+.header-two,
+.header-three {
     position: absolute;
-    text-align: right;
-    top: 0;
-    right: 0;
     z-index: var(--z-index-about);
 }
 
-h1 {
-    color: var(--title-color);
+.header-one,
+.header-three {
     font-family: "Times New Roman", Times, serif;
-    font-size: var(--font-size-large);
 }
 
-h2 {
-    text-align: center;
-    text-transform: uppercase;
-    font-size: var(--font-size-small);
-    width: 30ch;
-    line-height: 1.7;
-    letter-spacing: 0.5pt;
-    color: var(--sub-title-color);
+.header-one {
+    font-size: var(--font-size-header-one);
+    color: var(--header-one-color);
+    right: 0;
 }
 
-.about {
+.header-two {
+    font-family: sans-serif;
+    font-size: var(--font-size-header-two);
+    color: var(--header-two-color);
+    right: 0;
+    top: 20%;
+}
+
+.header-three {
+    /* transform: translateY(15rem); */
     position: absolute;
-    background-color: hsla(0, 100%, 100%, 0.5);
-    z-index: var(--z-index-about);
-    bottom: 0;
+    bottom: 2rem;
+    font-size: var(--font-size-header-three);
+    background-color: var(--header-three-color);
+    width: 100%;
+    text-align: center;
+
+    padding-block: var(--new-gap-small);
+
+    display: grid;
+    row-gap: var(--new-gap-small);
+
+    .title {
+        font-size: 2em;
+    }
+
+    .sub-header {
+        display: grid;
+        row-gap: var(--new-gap-tiny);
+    }
+
+    .sub-title {
+        font-weight: unset;
+        font-size: 0.7em;
+    }
+
+    .sub-sub-title {
+        font-style: italic;
+    }
 }
 
 .santa {
+    z-index: 0;
     width: 200px;
-    position: absolute;
-    left: -20%;
-    top: -10%;
+    transform: translate(-5rem, 8rem) scale(1.5);
 }
