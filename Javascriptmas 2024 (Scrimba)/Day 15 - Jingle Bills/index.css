@@ -12,12 +12,11 @@
 
     --z-index-about: 1;
 
+    --new-gap-mega: 5rem;
     --new-gap-large: 1.5rem;
     --new-gap-medium: 1rem;
     --new-gap-small: 0.9rem;
     --new-gap-tiny: 0.2rem;
-
-    background-color: var(--green);
 }
 
 * {
@@ -25,6 +24,8 @@
 }
 
 body {
+    padding: var(--new-gap-mega);
+    background-color: var(--green);
     min-height: 100vh;
     /* overflow-y: hidden; */
     display: grid;
@@ -77,7 +78,7 @@ main {
     text-transform: uppercase;
     color: var(--header-two-color);
     right: 0;
-    top: 20%;
+    top: 9rem;
 
     &::before,
     &::after {
