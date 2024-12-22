@@ -36,8 +36,11 @@ const Avatar = (name, imageUrl) => {
 const MainImage = (imageUrl, alt) => {
     const element = document.createElement("img");
     element.classList.add("feature-image");
-    element.setAttribute("alt", alt);
-    element.src = imageUrl;
+
+    if (alt) element.setAttribute("alt", alt);
+
+    if (imageUrl) element.src = imageUrl;
+
     return element;
 };
 
@@ -46,27 +49,77 @@ const avatars = feedData.map((obj) => {
     const avatar = Avatar(name, imageUrl);
     return {
         element: avatar,
-        feedImages: features,
+        images: features,
     };
 });
 
 const cycleImages = (avatars) => {
     const state = {
-        currentAvatar: avatars[0],
-        currentCount: 1,
-        avatarsCount: avatars.length,
+        currentAvatarCount: 1,
+        currentImageCount: 1,
         intervalId: undefined,
-        loadNextAvatar: function () {
-            if (this.currentCount >= this.avatarsCount) return;
-            this.avatarsCount += 1;
-            this.currentAvatar = avatars[this.currentCount];
-        },
     };
+
+    const activeClassName = "highlight";
+
+    const reachedImagesEnd = () => {
+        clearInterval(state.intervalId);
+
+        pageElements.mainImage.src = "";
+        pageElements.mainImage.removeAttribute("alt");
+
+        avatars.at(-1).element.classList.remove(activeClassName);
+
+        pageElements.imagesFeed.textContent = "Refresh to load latest images.";
+    };
+
+    const toggleAvatar = (oneIndex) => {
+        const zeroIndex = oneIndex - 1;
+        const prevZeroIndex = oneIndex - 2;
+
+        /* remove from previous one */
+        if (prevZeroIndex >= 0) {
+            const previousAvatar = avatars[prevZeroIndex].element;
+            previousAvatar.classList.remove(activeClassName);
+        }
+
+        /* set on current one */
+        if (oneIndex <= avatars.length) {
+            avatars[zeroIndex].element.classList.add(activeClassName);
+        }
+    };
+
+    state.intervalId = setInterval(() => {
+        if (state.currentAvatarCount > avatars.length) {
+            reachedImagesEnd();
+            return;
+        }
+        const currentAvatarIndex = state.currentAvatarCount - 1;
+        const avatar = avatars[currentAvatarIndex];
+        toggleAvatar(state.currentAvatarCount);
+        // console.log(avatar)
+
+        if (state.currentImageCount > avatar.images.length) {
+            state.currentAvatarCount += 1;
+            state.currentImageCount = 1;
+            return;
+        }
+
+        const currentImageIndex = state.currentImageCount - 1;
+        const { imageUrl, alt } = avatar.images[currentImageIndex];
+        pageElements.mainImage.src = `./images/${imageUrl}`;
+        pageElements.mainImage.setAttribute("alt", alt);
+
+        state.currentImageCount += 1;
+    }, 1500);
 };
 
-document.addEventListener("DOMContentLoaded", (e) => {
+window.addEventListener("load", (e) => {
     pageElements.uxLoading.classList.add("stop-animation");
     pageElements.avatarsFeed.append(...avatars.map((obj) => obj.element));
-    const main = MainImage("./images/bike.webp");
-    pageElements.imagesFeed.append(main);
+
+    pageElements.mainImage = MainImage();
+    pageElements.imagesFeed.append(pageElements.mainImage);
+
+    cycleImages(avatars);
 });
